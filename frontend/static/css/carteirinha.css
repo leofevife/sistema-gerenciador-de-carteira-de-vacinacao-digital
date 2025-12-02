@@ -1,0 +1,830 @@
+/* Reset e Configurações Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    color: #374151;
+}
+
+/* Container Principal */
+.dashboard-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .dashboard-container {
+        padding: 2rem;
+    }
+}
+
+.content-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Cabeçalho */
+.header {
+    margin-bottom: 0.5rem;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .header-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #115e59;
+    margin-bottom: 0.25rem;
+}
+
+.subtitle {
+    color: #4b5563;
+    font-size: 1rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Botões */
+.btn {
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: #0d9488;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0f766e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline {
+    background: white;
+    color: #0891b2;
+    border: 1px solid #7dd3fc;
+}
+
+.btn-outline:hover {
+    background: #f0f9ff;
+}
+
+.btn-outline-sm {
+    padding: 0.375rem 0.75rem;
+    background: white;
+    color: #0d9488;
+    border: 1px solid #0d9488;
+    font-size: 0.875rem;
+}
+
+.btn-outline-sm:hover {
+    background: #f0fdfa;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #0d9488;
+    padding: 0.5rem 1rem;
+}
+
+.btn-ghost:hover {
+    background: rgba(240, 253, 250, 0.5);
+}
+
+.btn-card {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.btn-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-text {
+    display: none;
+}
+/* Botão Limpo (BTN-CLEAN) - Ideal para "Sair" ou "Perfil" */
+.btn-clean {
+    /* Herda o estilo base do .btn */
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+
+    /* REGRAS PARA REMOVER O FUNDO E BORDA */
+    background: transparent;
+    border: none; 
+    color: #4b5563; /* Cor Cinza padrão */
+}
+
+.btn-clean:hover {
+    /* Usa a cor primária (roxa) no hover */
+    color: var(--primary-color, #6a1b9a); 
+    background: #f0f0f0; /* Fundo cinza bem suave no hover */
+    transform: none; /* Não levanta o botão para ser sutil */
+    box-shadow: none; /* Sem sombra */
+}
+/* Se você já tem .btn-profile, adicione estas regras a ele: */
+.btn-profile {
+    /* Aplicando as mesmas regras de .btn-clean para o seu botão Sair/Perfil */
+    background: transparent;
+    border: none;
+    color: #4b5563; 
+    padding: 0.625rem 1.25rem; /* Mantém o padding para área de clique */
+}
+.btn-profile:hover {
+    color: var(--primary-color, #6a1b9a);
+    background: #f0f0f0;
+    transform: none;
+    box-shadow: none;
+}
+@media (min-width: 768px) {
+    .btn-text {
+        display: inline;
+    }
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.card-header-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .card-header-flex {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-title-icon {
+    color: #0d9488;
+    font-size: 1.125rem;
+}
+
+.card-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+/* Acesso Rápido */
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .quick-access-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .quick-access-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.quick-access-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #99f6e4;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    color: #374151;
+}
+
+.quick-access-btn:hover {
+    background: #f0fdfa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.quick-access-btn i {
+    font-size: 1.5rem;
+    color: #0d9488;
+}
+
+/* Cards de Estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.stat-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.stat-card-teal {
+    border-left: 4px solid #0d9488;
+}
+
+.stat-card-green {
+    border-left: 4px solid #059669;
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.stat-icon {
+    font-size: 1rem;
+}
+
+.stat-card-teal .stat-icon {
+    color: #0d9488;
+}
+
+.stat-card-green .stat-icon {
+    color: #059669;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card-teal .stat-value {
+    color: #115e59;
+}
+
+.stat-card-green .stat-value {
+    color: #065f46;
+}
+
+.stat-subtitle {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* Progresso */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 0.75rem;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0d9488 0%, #059669 100%);
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Doses Agendadas */
+.scheduled-doses {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.dose-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+    border: 1px solid #99f6e4;
+    border-radius: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .dose-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.dose-info {
+    flex: 1;
+}
+
+.dose-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.dose-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.detail-item i {
+    font-size: 0.875rem;
+}
+
+.detail-item:nth-child(1) i { color: #0d9488; }
+.detail-item:nth-child(2) i { color: #0891b2; }
+.detail-item:nth-child(3) i { color: #059669; }
+
+.dose-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.badge-teal {
+    background: #0d9488;
+    color: white;
+}
+
+.badge-success {
+    background: #059669;
+    color: white;
+}
+
+.badge-applied {
+    background: #059669;
+    color: white;
+}
+
+/* Botão Voltar */
+.back-button-container {
+    margin-bottom: 0.5rem;
+}
+
+/* Carteirinha Digital */
+.vaccine-card-digital {
+    background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.vaccine-card-header {
+    padding: 1.5rem;
+}
+
+.vaccine-card-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .vaccine-card-header-content {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+}
+
+.user-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: #5eead4;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid white;
+    flex-shrink: 0;
+}
+
+.vaccine-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.vaccine-card-subtitle {
+    font-size: 0.875rem;
+    color: #ccfbf1;
+}
+
+
+.vaccine-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.vaccine-card-content {
+    padding: 1.5rem;
+}
+
+.vaccine-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .vaccine-card-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.detail-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 0.875rem;
+    color: #99f6e4;
+    margin-bottom: 0.125rem;
+}
+
+.detail-value {
+    color: white;
+    font-weight: 500;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.qr-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-code {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.qr-icon {
+    font-size: 8rem;
+    color: #d1d5db;
+}
+
+.qr-text {
+    font-size: 0.75rem;
+    color: #4b5563;
+    margin-top: 0.5rem;
+}
+
+.separator {
+    height: 1px;
+    background: rgba(153, 246, 228, 0.3);
+    margin: 1rem 0;
+}
+
+.vaccine-card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+    .vaccine-card-footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.update-date {
+    color: #ccfbf1;
+}
+
+/* Busca */
+.search-container {
+    position: relative;
+    flex: 1;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .search-container {
+        max-width: 16rem;
+    }
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0d9488;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+/* Tabela */
+.table-container {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+
+.vaccine-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.vaccine-table thead {
+    background: #f9fafb;
+}
+
+.vaccine-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+}
+
+.vaccine-table td {
+    padding: 1rem;
+    border-top: 1px solid #f3f4f6;
+    color: #4b5563;
+}
+
+.vaccine-table tbody tr {
+    transition: background 0.2s;
+}
+
+.vaccine-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.vaccine-name {
+    color: #111827;
+    font-weight: 500;
+}
+
+.batch-code {
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.empty-state {
+    padding: 2rem !important;
+    color: #9ca3af;
+}
+
+.table-footer {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Card de Informações */
+.info-card {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+}
+
+.info-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.info-icon {
+    background: #0d9488;
+    color: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+
+.info-icon i {
+    font-size: 1.25rem;
+}
+
+.info-text {
+    flex: 1;
+}
+
+.info-title {
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.info-description {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* Responsividade da Tabela */
+@media (max-width: 768px) {
+    .vaccine-table {
+        font-size: 0.75rem;
+    }
+    
+    .vaccine-table th,
+    .vaccine-table td {
+        padding: 0.5rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Melhorias de acessibilidade */
+button:focus,
+input:focus {
+    outline: 2px solid #0d9488;
+    outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+    outline: none;
+}

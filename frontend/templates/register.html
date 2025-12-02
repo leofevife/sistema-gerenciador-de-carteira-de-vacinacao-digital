@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - ImmunoTrack</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body class="body-login"> 
+
+<a href="{{ url_for('dashboard') }}" class="botao-voltar-tela">
+    <i class="fas fa-arrow-left"></i>
+</a>
+    
+    <header class="header-login">
+        <h1 class="titulo-login">Crie Sua Conta</h1>
+        <p class="introducao-header">Faça seu cadastro para acessar sua carteira de vacinação digital.</p>
+    </header>
+    
+    <main class="container-login">
+        <div class="card-login card-cadastro">
+            
+            <form action="{{ url_for('register') }}" method="POST">
+                
+                <h2 class="titulo-secao-cadastro">Dados Pessoais</h2>
+                
+                <div class="campo-form">
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                    <i class="icone-input fas fa-user"></i> 
+                </div>
+                
+                <div class="campo-form">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" title="Formato: 000.000.000-00" required>
+                    <i class="icone-input fas fa-id-card"></i>
+                </div>
+                
+                <div class="campo-form">
+                    <label for="cns">CNS (Cartão Nacional de Saúde):</label>
+                    <input type="text" id="cns" name="cns" placeholder="Número do CNS" required>
+                    <i class="icone-input fas fa-stethoscope"></i>
+                </div>
+                
+                <div class="campo-form campo-data">
+                    <label for="data-nascimento">Data de Nascimento:</label>
+                    <input type="date" id="data-nascimento" name="data-nascimento" required>
+                    <i class="icone-input fas fa-calendar-alt"></i>
+                </div>
+                
+                <div class="campo-form">
+                    <label for="sexo">Sexo/Gênero:</label>
+                    <select id="sexo" name="sexo" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="F">Feminino</option>
+                        <option value="M">Masculino</option>
+                        <option value="O">Outro</option>
+                        <option value="N">Prefiro não informar</option>
+                    </select>
+                    <i class="icone-input fas fa-venus-mars"></i>
+                </div>
+                
+                <h2 class="titulo-secao-cadastro">Acesso e Contato</h2>
+                
+                <div class="campo-form">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seu.email@exemplo.com" required>
+                    <i class="icone-input fas fa-envelope"></i>
+                </div>
+                
+                <div class="campo-form">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999">
+                    <i class="icone-input fas fa-phone"></i>
+                </div>
+                
+                <div class="campo-form">
+                    <label for="senha-cadastro">Criar Senha:</label>
+                    <input type="password" id="senha-cadastro" name="senha-cadastro" placeholder="Crie uma senha forte" required>
+                    <i class="icone-input fas fa-eye icone-toggle-senha-cadastro"></i>
+                </div>
+                
+                <div class="campo-form">
+                    <label for="confirmar-senha">Confirmar Senha:</label>
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Confirme sua senha" required>
+                    <i class="icone-input fas fa-lock"></i>
+                </div>
+                
+                <div class="links-adicionais">
+                    <p>Ao se cadastrar, você concorda com nossos <a href="#" class="link-secundario">Termos de Uso</a>.</p>
+                </div>
+                
+                <button type="submit" id="btnFinalizarCadastro" class="botao botao-acessar botao-centralizado">Finalizar Cadastro</button>
+                
+                <div class="links-adicionais links-login-cadastro">
+                    <p>Já possui uma conta? <a href="{{ url_for('login') }}" class="link-cadastro">Fazer Login</a></p>
+                </div>
+            </form>
+            
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Lógica de Toggle de Senha (Já Existente) ---
+        const campoSenhaCadastro = document.getElementById('senha-cadastro');
+        const iconeToggleCadastro = document.querySelector('.icone-toggle-senha-cadastro');
+
+        if (iconeToggleCadastro && campoSenhaCadastro) {
+            iconeToggleCadastro.addEventListener('click', function() {
+                const tipoAtual = campoSenhaCadastro.getAttribute('type');
+
+                if (tipoAtual === 'password') {
+                    campoSenhaCadastro.setAttribute('type', 'text');
+                    iconeToggleCadastro.classList.remove('fa-eye');
+                    iconeToggleCadastro.classList.add('fa-eye-slash');
+                } else {
+                    campoSenhaCadastro.setAttribute('type', 'password');
+                    iconeToggleCadastro.classList.remove('fa-eye-slash');
+                    iconeToggleCadastro.classList.add('fa-eye');
+                }
+            });
+        }
+        
+        // --- Lógica de Finalizar Cadastro e Redirecionar (Novo) ---
+        const btnFinalizar = document.getElementById('btnFinalizarCadastro');
+        // const paginaLogin = 'login.html'; 
+
+        if (btnFinalizar) {
+            btnFinalizar.addEventListener('click', function() {
+                // Aqui você pode verificar se todos os campos estão preenchidos antes de redirecionar
+                
+                // Redireciona para a página de login
+                // window.location.href = paginaLogin; 
+            });
+        }
+    });
+</script>

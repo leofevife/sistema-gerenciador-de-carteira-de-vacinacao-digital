@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImmunoTrack - Carteira de Vacinação Virtual</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> 
+</head>
+<body class="body-login"> <header class="main-header"> <div class="container main-nav-container"> <h1>ImmunoTrack</h1> <nav>
+                <a href="{{ url_for('login') }}" class="link-nav">Login</a>
+                <a href="{{ url_for('register') }}" class="link-nav link-cadastro-destaque">Cadastre-se</a> <a href="#informacoes" class="link-nav">Informações</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container main-content">
+        <section id="proposta" class="section-principal">
+            <h2 class="titulo-destaque-roxo">Sua Saúde Imunológica na Era Digital. Nunca mais perca uma vacina!</h2>
+            <p class="introducao-principal">Diga adeus à caderneta de vacinação de papel. Gerencie seu histórico e o de sua família de forma fácil, centralizada e online.</p>
+            
+            <div class="botoes-acao">
+                <a href="{{ url_for('login') }}" class="botao botao-acessar botao-centralizado">
+                    ACESSAR MINHA CARTEIRA
+                </a>
+                <a href="{{ url_for('register') }}" class="botao botao-criar botao-centralizado">
+                    CRIAR MINHA CARTEIRA VIRTUAL
+                </a>
+            </div>
+        </section>
+
+        <section id="funcionalidades" class="section-secundaria">
+            <h2 class="titulo-secao">O que o ImmunoTrack oferece?</h2>
+            
+            <div class="funcionalidades-grid">
+                
+                <div class="funcionalidade-item">
+                    <i class="fas fa-shield-alt icone-funcionalidade"></i>
+                    <h3>Carteira Virtual Segura</h3>
+                    <p>Mantenha seu histórico vacinal sempre acessível e livre de perdas ou rasuras. Acompanhe suas doses e as de seus dependentes em um só lugar.</p>
+                </div>
+                
+                <div class="funcionalidade-item">
+                    <i class="fas fa-map-marker-alt icone-funcionalidade"></i>
+                    <h3>Consulta de Postos</h3>
+                    <p>Encontre o posto de saúde mais próximo de você e verifique a disponibilidade de vacinas em tempo real.</p>
+                </div>
+                
+                <div class="funcionalidade-item">
+                    <i class="fas fa-calendar-check icone-funcionalidade"></i>
+                    <h3>Agendamento Online</h3>
+                    <p>Simplifique sua vida. Agende suas próximas vacinas e as de reforço sem complicações, reduzindo o risco de esquecimento.</p>
+                </div>
+
+            </div>
+
+            <div class="destaque-missao">
+                <h3>Juntos, fortalecendo a saúde pública.</h3>
+                <p>Nossa missão é aumentar a cobertura vacinal, combatendo a queda nas taxas através da tecnologia e facilidade de acesso à informação.</p>
+            </div>
+
+        </section>
+
+        <section id="informacoes" class="section-secundaria">
+    <div class="informacoes-card-acao"> <h2 class="titulo-acao">Informações Importantes</h2> <p>Mantenha-se informado sobre o calendário nacional e a importância das vacinas.</p>
+        
+        <a href="https://www.gov.br/saude/pt-br/campanhas-da-saude/vacinacao" 
+           class="botao botao-full-width botao-acessar botao-link-externo">
+            <i class="fas fa-external-link-alt"></i> Ver Calendário Nacional
+        </a>
+    </div>
+</section>
+
+<section class="section-secundaria section-fale-conosco">
+    <div class="container">
+        
+        <div class="fale-conosco-conteudo">
+            <p class="introducao-principal">Tem dúvidas, sugestões ou precisa de suporte? Entre em contato conosco. Nossa equipe está pronta para te ajudar.</p>
+            
+            <div class="contatos-info">
+                <p><i class="fas fa-envelope icone-contato"></i> Email: suporte@immunotrack.com</p>
+                <p><i class="fas fa-phone icone-contato"></i> Telefone: (99) 9999-9999</p>
+            </div>
+    </div>
+</section>
+        
+    </main>
+    <footer class="main-footer">
+        <p>&copy; 2025 ImmunoTrack - Carteira de Vacinação Virtual. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ImmunoTrack</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> 
+</head>
+<body class="body-login"> 
+
+<a href="{{ url_for('dashboard') }}" class="botao-voltar-tela">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+    <main class="container-login">
+        <div class="card-login">
+            
+            <h2 class="titulo-card-login">ImmunoTrack: Sua Proteção ao Seu Alcance.</h2>
+            
+            <form action="{{ url_for('login') }}" method="POST">
+                <p class="introducao-form">Faça login e tenha acesso imediato a todas as suas doses, locais de vacinação e agendamentos.</p>
+                                
+                <div class="campo-form">
+                    <label for="identificador">CPF:</label>
+                    <input type="text" id="identificador" name="identificador" placeholder="Seu CPF" required>
+                    <i class="icone-input fas fa-id-card"></i> 
+                </div>
+                
+                <div class="campo-form">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Sua senha" required>
+                    <i class="icone-input fas fa-eye icone-toggle-senha"></i> 
+                </div>
+                
+                <div class="checkbox-form">
+                    <div class="checkbox-wrap">
+                        <input type="checkbox" id="lembrar-senha" name="lembrar-senha">
+                        <label for="lembrar-senha">Lembrar minha senha</label>
+                    </div>
+                    <a href="{{ url_for('forgot_password') }}" class="link-secundario">Esqueceu sua senha?</a>
+                </div>
+                
+                <button type="submit" id="btnAcessar" class="botao botao-acessar botao-centralizado">Entrar</button>
+            
+            <div class="links-adicionais">
+                <p>Ainda não tem uma carteira virtual? <a href="{{ url_for('register') }}" class="link-cadastro">Cadastre-se</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. Lógica de Toggle de Senha (Já Existente) ---
+        
+        // Seleciona o campo de senha e o ícone de toggle usando seus identificadores (ID do input e classe do ícone)
+        const campoSenha = document.getElementById('senha');
+        const iconeToggle = document.querySelector('.icone-toggle-senha');
+
+        if (iconeToggle && campoSenha) {
+            iconeToggle.addEventListener('click', function() {
+                // Verifica o tipo atual do campo (password ou text)
+                const tipoAtual = campoSenha.getAttribute('type');
+
+                // Alterna o tipo do input
+                if (tipoAtual === 'password') {
+                    campoSenha.setAttribute('type', 'text');
+                    // Altera o ícone: fa-eye (visível) para fa-eye-slash (escondido)
+                    iconeToggle.classList.remove('fa-eye');
+                    iconeToggle.classList.add('fa-eye-slash');
+                } else {
+                    campoSenha.setAttribute('type', 'password');
+                    // Altera o ícone de volta
+                    iconeToggle.classList.remove('fa-eye-slash');
+                    iconeToggle.classList.add('fa-eye');
+                }
+            });
+        }
+        
+        // ------------------------------------------------------------------
+        
+        // --- 2. Lógica de Redirecionamento (Novo Código) ---
+        
+        // 1. Pega a referência do botão pelo ID (Certifique-se que o botão no HTML tem id="btnAcessar" e type="button")
+        const btnLogin = document.getElementById('btnAcessar'); 
+        
+        // 2. Define a página de destino (será feito pelo backend)
+        // const paginaDestino = '../vitoria/index.html';
+
+        // 3. Adiciona o evento de clique para redirecionar
+        if (btnLogin) {
+            btnLogin.addEventListener('click', function() {
+                
+                // Em um projeto real, aqui seria feita a validação das credenciais
+                
+                console.log('Botão Acessar clicado. Redirecionando para ' + paginaDestino);
+                
+                // Redireciona a página: (será feito pelo backend)
+                // window.location.href = paginaDestino; 
+            });
+        }
+        
+    });
+</script>
+</body>
+</html>

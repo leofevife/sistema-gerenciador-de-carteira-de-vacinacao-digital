@@ -1,0 +1,460 @@
+/* --- 1. PALETA DE CORES E BASE --- */
+:root {
+    --primary-color: #115e59; /* Roxo Principal (Acentuação) */
+    --primary-light: #0d9488; /* Roxo para Hover */
+    --text-color: #333333; /* Texto Principal (Cinza Escuro) */
+    --secondary-text-color: #666666; /* Texto Secundário e Descrições */
+    --background-color: #f4f7f6; /* Fundo Levemente Cinza */
+    --card-background: #ffffff; /* Fundo dos Cards/Elementos */
+    --shadow-color: rgba(0, 0, 0, 0.05); /* Sombra Suave */
+    --error-color: #d32f2f; /* Vermelho para Perigo/Sair */
+    --success-color: #4caf50; /* Verde para Status Ativo */
+    --input-border: #ddd; /* Borda de Inputs */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Usando a fonte linkada no HTML */
+    background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container-login { /* Usado para centralizar o conteúdo principal */
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* --- 2. CABEÇALHO (NAV BAR) --- */
+.main-header-nav {
+    background-color: var(--card-background);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 15px 0;
+}
+
+.main-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo-link-header {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-links-header {
+    display: flex;
+    gap: 20px;
+}
+
+.link-nav {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.link-nav:hover {
+    color: var(--primary-color);
+}
+
+.link-nav .fa-sign-out-alt,
+.link-nav[href="../inicio/paginainicial.html"] {
+    color: var(--error-color); /* Ícone Sair em vermelho */
+}
+/* Garante que o vermelho não mude ao passar o mouse */
+.link-nav[href="../inicio/paginainicial.html"]:hover {
+    color: var(--error-color);
+    opacity: 0.8; 
+}
+
+.link-nav:hover .fa-sign-out-alt {
+    color: var(--error-color);
+}
+
+/* --- 3. ESTRUTURA PRINCIPAL DO PERFIL (CARD) --- */
+.card-perfil {
+    background-color: var(--card-background);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.titulo-secao-principal {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.introducao-perfil {
+    color: var(--secondary-text-color);
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+/* --- 4. ESTILO SANFONADO (ACORDEÃO) --- */
+.secao-acordeao {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.secao-acordeao:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.acordeao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 25px;
+    background-color: #fcfcfc; /* Fundo leve para o cabeçalho */
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+
+.acordeao-header.aberto {
+    border-bottom: 1px solid #eee;
+}
+
+.subtitulo-secao {
+    font-size: 1.25em;
+    color: var(--text-color);
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icone-secao {
+    color: var(--primary-color); /* Ícones de seção em roxo */
+    font-size: 1.1em;
+}
+
+.icone-seta {
+    color: var(--secondary-text-color);
+    transition: transform 0.3s;
+}
+
+.acordeao-header.aberto .icone-seta {
+    transform: rotate(180deg);
+}
+
+.acordeao-content {
+    padding: 0 25px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.acordeao-content.content-aberto {
+    padding: 20px 25px;
+    max-height: 1000px; /* Valor alto para animar a altura */
+}
+
+.descricao-secao {
+    color: var(--secondary-text-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* --- 5. FORMULÁRIO E INPUTS --- */
+.formulario-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.campos-duplos {
+    display: flex;
+    gap: 20px;
+}
+
+.input-grupo {
+    flex: 1;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.input-grupo label {
+    display: block;
+    font-weight: 500;
+    color: var(--secondary-text-color);
+    margin-bottom: 5px;
+    font-size: 0.95em;
+}
+
+.input-grupo input[type="text"],
+.input-grupo input[type="email"],
+.input-grupo input[type="tel"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+.input-grupo input:read-only {
+    background-color: var(--background-color); /* Leve cinza para campos readonly */
+    border-style: dashed;
+}
+
+.input-grupo input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.icone-edicao {
+    position: absolute;
+    right: 15px;
+    top: 38px;
+    color: var(--primary-light);
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+/* --- 6. BOTÕES DE AÇÃO --- */
+.botao-acessar,
+.botao-secundario {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.botao-salvar {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 10px;
+}
+
+.botao-salvar:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+.botao-secundario {
+    background-color: #e0e0e0;
+    color: var(--text-color);
+    border: 1px solid #ccc;
+    margin-top: 15px;
+}
+
+.botao-secundario:hover {
+    background-color: #ccc;
+}
+
+/* --- 7. BLOCOS DE CONFIGURAÇÃO / LISTAS --- */
+.info-bloco {
+    padding: 15px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    border-left: 5px solid var(--teal-color);
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+.info-status {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.info-aviso {
+    display: block;
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+.bloco-configuracao {
+    display: flex;
+    flex-direction: column;
+    gap: 1px; /* Espaço mínimo entre itens */
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: var(--card-background);
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.config-item:last-child {
+    border-bottom: none;
+}
+
+.config-status {
+    font-size: 0.9em;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.status-ativo {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.link-acao {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.link-acao:hover {
+    color: var(--primary-light);
+}
+
+.link-perigo {
+    color: var(--error-color);
+}
+
+.item-perigo {
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+/* --- 8. SWITCH/TOGGLE (Notificações) --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* --- 9. LINK SAIR NO FINAL --- */
+.links-perfil {
+    text-align: right;
+    margin-top: 25px;
+}
+
+.link-sair {
+    color: var(--error-color);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: opacity 0.3s;
+}
+
+.link-sair:hover {
+    opacity: 0.8;
+}
+
+/* --- 10. RESPONSIVIDADE --- */
+@media (max-width: 600px) {
+    .container-login {
+        padding: 0 10px;
+    }
+    
+    .card-perfil {
+        padding: 20px;
+    }
+
+    .main-nav-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links-header {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .campos-duplos {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .acordeao-header {
+        padding: 15px 20px;
+    }
+    
+    .acordeao-content.content-aberto {
+        padding: 15px 20px;
+    }
+
+    .botao-acessar {
+        width: 100%;
+    }
+}

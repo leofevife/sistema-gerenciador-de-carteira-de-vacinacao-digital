@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteirinha Digital - Carteira de Vacinas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carteirinha.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<header class="main-header">
+        <div class="header-content">
+                <span class="logo-text">ImmunoTrack</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('profile') }}" class="nav-link"><i class="fas fa-user"></i> Perfil</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link btn-voltar" onclick="history.back()"><i class="fas fa-arrow-left"></i> Voltar</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="dashboard-container">
+        <div class="content-wrapper">
+
+            <div class="card vaccine-card-digital">
+                <div class="vaccine-card-header">
+                    <div class="vaccine-card-header-content">
+                        <div class="user-info">
+                            <div class="avatar">
+                                <span>MS</span>
+                            </div>
+                            <div>
+                                <h2 class="vaccine-card-title">Carteirinha de Vacinação Digital</h2>
+                                <p class="vaccine-card-subtitle">Ministério da Saúde - Sistema Único de Saúde</p>
+                            </div>
+                        </div>
+                        <div class="vaccine-card-actions">
+                            <button class="btn btn-card" onclick="toggleQR()">
+                                <i class="fas fa-qrcode"></i>
+                                <span class="btn-text">QR Code</span>
+                            </button>
+
+                            <button class="btn btn-card" onclick="toggleHistory()" id="toggleHistoryButton">
+                                <i class="fas fa-eye-slash" id="historyIcon"></i>
+                                <span class="btn-text" id="historyButtonText">Histórico</span>
+                            </button>
+                            <button class="btn btn-card" onclick="shareCard()">
+                                <i class="fas fa-share-alt"></i>
+                                <span class="btn-text">Compartilhar</span>
+                            </button>
+                            <button class="btn btn-card" onclick="downloadPDF()">
+                                <i class="fas fa-download"></i>
+                                <span class="btn-text">Baixar PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="vaccine-card-content">
+                    <div class="vaccine-card-grid">
+                        <div class="user-details">
+                            <div class="detail-group">
+                                <span class="detail-label">Nome Completo</span>
+                                <p class="detail-value">Maria Silva Santos</p>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <span class="detail-label">CPF</span>
+                                    <p class="detail-value">123.456.789-00</p>
+                                </div>
+                                <div class="detail-group">
+                                    <span class="detail-label">Data de Nascimento</span>
+                                    <p class="detail-value">15/03/1990</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <span class="detail-label">Cartão Nacional de Saúde</span>
+                                    <p class="detail-value">123 4567 8901 2345</p>
+                                </div>
+                                <div class="detail-group">
+                                    <span class="detail-label">Tipo Sanguíneo</span>
+                                    <p class="detail-value">A+</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-container" id="qrContainer" style="display: none;">
+                            <div class="qr-code">
+                                <i class="fas fa-qrcode qr-icon"></i>
+                                <p class="qr-text">QR Code da Carteirinha</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="vaccine-card-footer">
+                        <span class="badge badge-success">12 Vacinas Registradas</span>
+                        <p class="update-date">Atualizado em: <span id="currentDate"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="historyCard">
+                <div class="card-header card-header-flex">
+                    <div>
+                        <h3 class="card-title">Histórico Completo de Vacinação</h3>
+                        <p class="card-description">Todas as vacinas registradas no sistema</p>
+                    </div>
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar vacina..." oninput="filterVaccines()">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="table-container">
+                        <table class="vaccine-table">
+                            <thead>
+                                <tr>
+                                    <th>Vacina</th>
+                                    <th>Dose</th>
+                                    <th>Data de Aplicação</th>
+                                    <th>Lote</th>
+                                    <th>Local de Aplicação</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vaccineTableBody">
+                                </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer" id="tableFooter">
+                        </div>
+                </div>
+            </div>
+
+            <div class="card info-card">
+                <div class="card-content">
+                    <div class="info-content">
+                        <div class="info-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="info-text">
+                            <p class="info-title">Como usar sua carteirinha digital</p>
+                            <p class="info-description">
+                                Apresente o QR Code ou compartilhe sua carteirinha digital em estabelecimentos, 
+                                escolas e serviços de saúde. Todos os dados são verificáveis e seguros.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+    
+</body>
+</html>

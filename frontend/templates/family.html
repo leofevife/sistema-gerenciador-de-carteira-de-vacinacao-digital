@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira de Vacinação Familiar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/family.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+                <span class="logo-text">ImmunoTrack</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('profile') }}" class="nav-link"><i class="fas fa-user"></i> Perfil</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link btn-voltar" onclick="history.back()"><i class="fas fa-arrow-left"></i> Voltar</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="app">
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="icon-box gradient-bg">
+                        <i data-lucide="syringe"></i>
+                    </div>
+                    <div>
+                        <h1>Carteira de Vacinação Familiar</h1>
+                        <p class="subtitle">Gerencie a saúde de toda sua família em um só lugar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div>
+                            <p class="stat-label">Total de Familiares</p>
+                            <p class="stat-value" id="totalMembers">0</p>
+                        </div>
+                        <div class="stat-icon blue-bg">
+                            <i data-lucide="user-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div>
+                            <p class="stat-label">Historico de Vacinas</p>
+                            <p class="stat-value" id="totalVaccines">0</p>
+                        </div>
+                        <div class="stat-icon green-bg">
+                            <i data-lucide="syringe"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div>
+                            <p class="stat-label">Vacinas Pendentes</p>
+                            <p class="stat-value" id="pendingVaccines">0</p>
+                        </div>
+                        <div class="stat-icon amber-bg">
+                            <i data-lucide="syringe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <div class="search-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar familiar..." class="search-input">
+                </div>
+                <button class="btn btn-primary" id="addFamilyBtn">
+                    <i data-lucide="user-plus"></i>
+                    <span>Adicionar Familiar</span>
+                </button>
+            </div>
+
+            <!-- Family Members Grid -->
+            <div id="familyGrid" class="family-grid"></div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i data-lucide="user-plus"></i>
+                </div>
+                <h3>Nenhum familiar encontrado</h3>
+                <p class="empty-text">Adicione o primeiro familiar para começar</p>
+                <button class="btn btn-primary" id="addFirstFamilyBtn">
+                    <i data-lucide="user-plus"></i>
+                    <span>Adicionar Primeiro Familiar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Family Dialog -->
+    <div id="addFamilyDialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog">
+            <div class="dialog-header">
+                <h2>Adicionar Familiar</h2>
+                <button class="dialog-close" onclick="closeAddDialog()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <p class="dialog-description">Adicione um novo membro da família para gerenciar sua carteira de vacinação.</p>
+            <form id="addFamilyForm">
+                <div class="form-group">
+                    <label for="memberName">Nome completo</label>
+                    <input type="text" id="memberName" placeholder="Digite o nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberRelationship">Parentesco</label>
+                    <select id="memberRelationship" required>
+                        <option value="">Selecione o parentesco</option>
+                        <option value="Filho(a)">Filho(a)</option>
+                        <option value="Cônjuge">Cônjuge</option>
+                        <option value="Pai/Mãe">Pai/Mãe</option>
+                        <option value="Irmão/Irmã">Irmão/Irmã</option>
+                        <option value="Avô/Avó">Avô/Avó</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="memberBirthDate">Data de nascimento</label>
+                    <input type="date" id="memberBirthDate" required>
+                </div>
+                <div class="dialog-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeAddDialog()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Schedule Appointment Dialog -->
+    <div id="scheduleDialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog">
+            <div class="dialog-header">
+                <h2>Agendar Consulta</h2>
+                <button class="dialog-close" onclick="closeScheduleDialog()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <p class="dialog-description">Agende uma consulta de vacinação para <span id="scheduleMemberName"></span></p>
+            <form id="scheduleForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="appointmentDate">Data</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime">Horário</label>
+                        <input type="time" id="appointmentTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="vaccineType">Tipo de vacina</label>
+                    <select id="vaccineType" required>
+                        <option value="">Selecione a vacina</option>
+                        <option value="COVID-19">COVID-19</option>
+                        <option value="Gripe">Gripe (Influenza)</option>
+                        <option value="Hepatite B">Hepatite B</option>
+                        <option value="Tétano">Tétano</option>
+                        <option value="Febre Amarela">Febre Amarela</option>
+                        <option value="HPV">HPV</option>
+                        <option value="Tríplice Viral">Tríplice Viral (Sarampo, Caxumba, Rubéola)</option>
+                        <option value="Pneumocócica">Pneumocócica</option>
+                        <option value="Meningocócica">Meningocócica</option>
+                        <option value="Outra">Outra</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location">Local</label>
+                    <input type="text" id="location" placeholder="Ex: UBS Centro, Clínica São José" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Observações (opcional)</label>
+                    <textarea id="notes" rows="3" placeholder="Adicione observações sobre a consulta..."></textarea>
+                </div>
+                <div class="dialog-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeScheduleDialog()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar Agendamento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vaccination Record Dialog -->
+    <div id="recordDialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog dialog-large">
+            <div class="dialog-header">
+                <h2>Carteira de Vacinação - <span id="recordMemberName"></span></h2>
+                <button class="dialog-close" onclick="closeRecordDialog()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <p class="dialog-description">Visualize o histórico completo de vacinação</p>
+            <div class="record-content">
+                <div class="member-info">
+                    <div>
+                        <p class="info-label">Data de nascimento</p>
+                        <p id="recordBirthDate"></p>
+                    </div>
+                    <div>
+                        <p class="info-label">Idade</p>
+                        <p id="recordAge"></p>
+                    </div>
+                    <div>
+                        <p class="info-label">Parentesco</p>
+                        <p id="recordRelationship"></p>
+                    </div>
+                </div>
+                <div class="vaccines-section">
+                    <h3>Histórico de Vacinas</h3>
+                    <div id="vaccinesList" class="vaccines-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="{{ url_for('static', filename='js/family.js') }}"></script>
+</body>
+</html>

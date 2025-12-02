@@ -1,0 +1,730 @@
+/* ================================================= */
+/* 1. VARIÁVEIS E ESTILOS GERAIS */
+/* ================================================= */
+
+:root {
+    /* Paleta de Cores */
+    --cor-fundo-principal: #1a1a1a;
+    --cor-card: #2c2c2c;
+    --cor-texto-principal: #f0f0f0;
+    --cor-texto-secundario: #a0a0a0;
+    --cor-borda-input: #444;
+    --cor-placeholder: #777;
+
+    /* Gradientes e Destaque Roxo */
+    --cor-roxo-claro: #1b9c96;
+    --cor-roxo-escuro: #2bc4bd;
+    --gradiente-botao-login: linear-gradient(to right, #2bc4bd, #2bc4bd);
+    --gradiente-botao-hover: linear-gradient(to right, #2bc4bd, #2bc4bd);
+
+    /* UI / Sombras */
+    --borda-radius-grande: 15px;
+    --borda-radius-pequeno: 8px;
+    --sombra-card: 0 8px 25px rgba(0, 0, 0, 0.4);
+    --sombra-botao: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--cor-texto-principal);
+}
+
+/* Container de Conteúdo Geral */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ================================================= */
+/* 2. ESTILOS BASE DAS TELAS DE FORMULÁRIO (Login/Cadastro) */
+/* ================================================= */
+
+.body-login {
+    background-color: var(--cor-fundo-principal);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* NOVO: Estilo para a Seta de Voltar no Canto da Tela */
+.botao-voltar-tela {
+    position: absolute;
+    top: 30px; /* Distância do topo */
+    left: 30px; /* Distância da esquerda */
+    font-size: 1.5rem; /* Tamanho ligeiramente maior */
+    color: var(--cor-texto-principal);
+    text-decoration: none;
+    transition: color 0.2s;
+    z-index: 100; /* Garante que fique acima de todos os elementos, incluindo as decorações do body */
+}
+
+.botao-voltar-tela:hover {
+    color: var(--cor-roxo-claro);
+}
+/* Decoração no canto superior direito */
+.body-login::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(38, 207, 199, 0.4) 0%, rgba(142,68,173,0) 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: 0;
+}
+.body-login::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(52, 152, 219,0.5) 0%, rgba(52, 152, 219,0) 70%);
+    border-radius: 50%;
+    filter: blur(30px);
+    z-index: 0;
+}
+
+/* Header e Títulos da Página (Usado no Cadastro) */
+.header-login {
+    background-color: transparent;
+    color: var(--cor-texto-principal);
+    padding: 30px 20px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.titulo-login {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--cor-roxo-claro);
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(32, 178, 170, 0.4);
+}
+
+.introducao-header {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 20px;
+}
+
+.botao-voltar {
+    display: none; /* Mantido conforme seu código original */
+}
+
+/* ================================================= */
+/* 3. ESTILO DO FORMULÁRIO E CARDS */
+/* ================================================= */
+
+.container-login {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1;
+}
+
+.card-login {
+    background-color: var(--cor-card);
+    padding: 40px 30px;
+    border-radius: var(--borda-radius-grande);
+    box-shadow: var(--sombra-card);
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Título DENTRO do Card (Usado no Login) */
+.titulo-card-login {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cor-roxo-claro);
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(32, 178, 170, 0.4);
+}
+
+.introducao-form {
+    color: var(--cor-texto-secundario);
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* ================================================= */
+/* 4. ESTILO DOS CAMPOS DE INPUT E ÍCONES */
+/* ================================================= */
+
+.campo-form {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.campo-form label {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+.campo-form input[type="text"],
+.campo-form input[type="password"],
+.campo-form input[type="email"],
+.campo-form input[type="tel"] 
+.campo-form input[type="date"],
+.campo-form select {
+    width: 100%;
+    padding: 15px 20px;
+    padding-right: 50px;
+    border: 1px solid var(--cor-borda-input);
+    border-radius: var(--borda-radius-pequeno);
+    background-color: var(--cor-card);
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.campo-form select {
+    color: var(--cor-placeholder);    
+}
+
+.campo-form select:valid, 
+.campo-form select:focus {
+    color: var(--cor-texto-principal);
+}
+
+.campo-form input::placeholder {
+    color: var(--cor-placeholder);
+}
+
+.campo-form input:focus {
+    border-color: var(--cor-roxo-claro);
+    box-shadow: 0 0 0 2px rgba(155, 89, 182, 0.3);
+    outline: none;
+}
+
+/* Estilo Base para os Ícones nos Inputs */
+.icone-input {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor-placeholder);
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+/* Ajuste Específico para o Ícone de Toggle de Senha */
+.icone-toggle-senha,
+.icone-toggle-senha-cadastro {
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.icone-toggle-senha:hover,
+.icone-toggle-senha-cadastro:hover {
+    color: var(--cor-roxo-claro);
+}
+
+/* ================================================= */
+/* 5. CHECKBOX E LINKS ADICIONAIS */
+/* ================================================= */
+
+.checkbox-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.checkbox-form input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: var(--cor-roxo-claro);
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Links em Roxo */
+.link-secundario,
+.link-cadastro {
+    color: var(--cor-roxo-claro);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.link-secundario:hover,
+.link-cadastro:hover {
+    color: var(--cor-roxo-escuro);
+    text-decoration: underline;
+}
+
+.links-adicionais {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.links-adicionais p {
+    margin-bottom: 10px;
+}
+
+/* ================================================= */
+/* 6. ESTILOS GERAIS DE BOTÕES */
+/* ================================================= */
+
+.botao {
+    display: block;
+    padding: 15px 25px;
+    border: none;
+    border-radius: var(--borda-radius-grande);
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--sombra-botao);
+    color: var(--cor-texto-principal);
+}
+
+/* Botão Principal (Gradiente Roxo) */
+.botao-acessar {
+    background: var(--gradiente-botao-login);
+    margin-bottom: 20px;
+}
+
+.botao-acessar:hover {
+    background: var(--gradiente-botao-hover);
+    transform: translateY(-2px);
+}
+
+.botao-acessar:active {
+    transform: translateY(0);
+}
+
+/* Estilo para centralizar o botão (usado no login e cadastro) */
+.botao-centralizado {
+    width: auto;
+    min-width: 200px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+
+/* ================================================= */
+/* 7. ESTILOS ESPECÍFICOS DA TELA DE CADASTRO */
+/* ================================================= */
+
+/* Card de Cadastro (Mais largo e alinhado ao topo) */
+.card-cadastro {
+    max-width: 550px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    align-self: flex-start;
+}
+
+/* Títulos de Seção Internos (Dados Pessoais, Contato) */
+.titulo-secao-cadastro {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cor-roxo-claro);
+    margin-top: 35px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--cor-borda-input);
+    text-align: left;
+}
+
+/* Estilo para o campo de seleção (select) */
+.campo-form select {
+    width: 100%;
+    padding: 15px 20px;
+    padding-right: 50px;
+    border: 1px solid var(--cor-borda-input);
+    border-radius: var(--borda-radius-pequeno);
+    background-color: var(--cor-card);
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.campo-form select:focus {
+    border-color: var(--cor-roxo-claro);
+    box-shadow: 0 0 0 2px rgba(32, 178, 170, 0.4);
+    outline: none;
+}
+
+/* Campo de Data: ajusta a cor do texto do input[type="date"] no tema escuro */
+.campo-data input[type="date"] {
+    color: #000000 !important;
+}
+
+.campo-data input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+/* ================================================= */
+/* 8. ESTILOS DA PÁGINA INICIAL (HOME) */
+/* ================================================= */
+
+/* 8.1. Header e Navegação */
+.main-header {
+    background-color: var(--cor-card);
+    padding: 15px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.main-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
+    color: var(--cor-roxo-claro);
+    font-weight: 700;
+}
+
+.link-nav {
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 8px 12px;
+    border-radius: var(--borda-radius-pequeno);
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.link-nav:hover {
+    color: var(--cor-roxo-claro);
+    background-color: rgba(16, 107, 103, 0.4);
+}
+
+
+/* 8.2. Botões de Ação Principais (ACESSAR/CRIAR CARTEIRA) */
+.botoes-acao {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    margin-top: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: nowrap;
+}
+
+/* Garante que os botões dentro da div flexível cresçam */
+.botoes-acao .botao {
+    flex-grow: 1;
+    max-width: 50%;
+}
+
+/* Estilo para o botão de criar carteira (roxo sólido) */
+.botao-criar {
+    background-color: var(--cor-roxo-escuro);
+    color: var(--cor-texto-principal);
+    transition: all 0.3s ease;
+    box-shadow: var(--sombra-botao);
+}
+
+.botao-criar:hover {
+    background-color: var(--cor-roxo-claro);
+    transform: translateY(-2px);
+}
+
+/* Botão Secundário (Oculto) */
+.botao-secundario {
+    display: none;
+}
+
+/* 8.3. Seções e Proposta Principal */
+.section-principal {
+    text-align: center;
+    padding: 80px 0;
+    background: radial-gradient(circle at top, rgba(142, 68, 173, 0.1) 0%, rgba(26, 26, 26, 0) 60%);
+}
+
+.titulo-destaque-roxo {
+    font-size: 2.5rem;
+    color: var(--cor-roxo-claro);
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(39, 212, 204, 0.4);
+}
+
+.introducao-principal {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 30px;
+}
+
+.section-secundaria {
+    padding: 60px 0;
+    border-top: 1px solid var(--cor-borda-input);
+}
+
+.titulo-secao {
+    color: var(--cor-roxo-claro);
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+/* 8.4. Grid de Funcionalidades */
+.funcionalidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.funcionalidade-item {
+    background-color: var(--cor-card);
+    padding: 30px;
+    border-radius: var(--borda-radius-grande);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-top: 4px solid var(--cor-roxo-claro);
+    transition: transform 0.3s;
+}
+
+.funcionalidade-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(32, 178, 170, 0.4);
+}
+
+.icone-funcionalidade {
+    font-size: 3rem;
+    color: var(--cor-roxo-claro);
+    margin-bottom: 15px;
+}
+
+.funcionalidade-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--cor-texto-principal);
+}
+
+.funcionalidade-item p {
+    color: var(--cor-texto-secundario);
+}
+
+/* 8.5. Destaque Missão */
+.destaque-missao {
+    background: var(--gradiente-botao-login);
+    padding: 40px;
+    border-radius: var(--borda-radius-grande);
+    text-align: center;
+    margin: 40px 0;
+    box-shadow: var(--sombra-card);
+}
+
+.destaque-missao h3 {
+    font-size: 1.8rem;
+    color: var(--cor-texto-principal);
+    margin-bottom: 10px;
+}
+
+.destaque-missao p {
+    font-size: 1.1rem;
+    color: #eee;
+}
+
+/* 8.6. Card de Informações Importantes (Ação) */
+.informacoes-card-acao {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: var(--cor-card);
+    border-radius: var(--borda-radius-grande);
+    box-shadow: var(--sombra-card);
+    text-align: center;
+}
+
+.informacoes-card-acao .titulo-acao {
+    font-size: 2rem;
+    color: var(--cor-roxo-claro);
+    margin-bottom: 15px;
+}
+
+/* Botão de Link Externo (Ver Calendário Nacional) */
+.botao-link-externo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: var(--gradiente-botao-login);
+    padding: 18px 25px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.botao-link-externo:hover {
+    background: var(--gradiente-botao-hover);
+    transform: translateY(-2px);
+}
+
+.botao-link-externo .fas {
+    margin-right: 10px;
+}
+/* 8.6. Seção Fale Conosco */
+.section-fale-conosco {
+    /* REDUÇÃO DE ESPAÇAMENTO VERTICAL: De 60px/80px para 40px/40px */
+    padding: 40px 0 40px 0;
+    text-align: center;
+}
+
+.fale-conosco-conteudo {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Reduz o espaçamento do parágrafo de introdução para deixá-lo mais próximo */
+.introducao-principal {
+    font-size: 1rem; /* Tamanho levemente reduzido para compactação */
+    margin-bottom: 20px; /* Reduz a margem inferior */
+    color: var(--cor-texto-secundario);
+}
+
+.contatos-info {
+    /* REDUÇÃO DE MARGEM: De 30px para 15px */
+    margin: 15px 0;
+    font-size: 1rem; /* Tamanho reduzido para compactação */
+    color: var(--cor-texto-principal);
+}
+
+.contatos-info p {
+    margin-bottom: 5px; /* Reduz o espaço entre as linhas de email e telefone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icone-contato {
+    color: var(--cor-roxo-claro);
+    font-size: 1.1rem; /* Ícone levemente menor */
+    margin-right: 8px; /* Espaçamento menor entre ícone e texto */
+    width: 20px; 
+    text-align: center;
+}
+
+/* 8.7. Footer */
+.main-footer {
+    background-color: var(--cor-card);
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--cor-borda-input);
+    color: var(--cor-texto-secundario);
+    font-size: 0.85rem;
+}
+
+
+/* ================================================= */
+/* 9. RESPONSIVIDADE GERAL E MOBILE */
+/* ================================================= */
+
+/* 9.1. Ajustes Gerais (Abaixo de 600px) */
+@media (max-width: 600px) {
+    /* Ajustes globais para o card de Login/Cadastro */
+    .header-login {
+        padding: 20px 15px 0;
+    }
+
+    .titulo-login {
+        font-size: 1.5rem;
+    }
+
+    .card-login {
+        padding: 30px 20px;
+        box-shadow: none;
+    }
+
+    /* Diminui a decoração de fundo */
+    .body-login::before,
+    .body-login::after {
+        top: -20px;
+        right: -20px;
+        width: 150px;
+        height: 150px;
+        filter: blur(25px);
+    }
+
+    /* Empilha checkbox/links */
+    .checkbox-form {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+
+/* 9.2. Ajustes Específicos da Página Inicial (HOME) (Abaixo de 500px) */
+@media (max-width: 500px) {
+    /* Ajustes da Navegação (Empilha) */
+    .main-nav-container {
+        flex-direction: column;
+    }
+    .main-header h1 {
+        margin-bottom: 15px;
+    }
+    .main-header nav a {
+        margin: 0 10px;
+    }
+
+    /* Títulos e Padding */
+    .titulo-destaque-roxo {
+        font-size: 2rem;
+    }
+    .titulo-secao {
+        font-size: 1.6rem;
+    }
+    .section-principal {
+        padding: 50px 0;
+    }
+
+    /* Botões de Ação (Empilha) */
+    .botoes-acao {
+        flex-direction: column;
+        gap: 15px;
+        max-width: 90%;
+    }
+    .botoes-acao .botao {
+        width: 100%;
+        max-width: 300px;
+        flex-grow: 0;
+    }
+
+    /* Card de Informações */
+    .informacoes-card-acao {
+        padding: 30px 20px;
+    }
+    .informacoes-card-acao .titulo-acao {
+        font-size: 1.5rem;
+    }
+}
+

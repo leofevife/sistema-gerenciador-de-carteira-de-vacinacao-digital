@@ -1,0 +1,183 @@
+/* ========================================= */
+/* --- Variáveis de Cor --- */
+/* ========================================= */
+:root {
+    /* Cores principais baseadas no ImmunoTrack (Roxo/Teal) */
+    --primary-color: #2bc4bd; /* Roxo para logo e hover */
+    --secondary-color: #0d9488; /* Teal principal */
+    
+    /* Cores de Fundo */
+    --card-background: #ffffff; /* Fundo branco para cards e cabeçalho */
+    --background-light: #f0fdfa; /* Fundo claro para o dashboard */
+    
+    /* Cores de Texto */
+    --primary-text-color: #111827; /* Preto/Cinza Escuro */
+    --secondary-text-color: #666; /* Cor cinza para o texto padrão da navegação */
+    --muted-text-color: #9ca3af; /* Cinza claro para subtítulos/notas */
+}
+
+/* ========================================= */
+/* --- RESET E ESTILOS GERAIS --- */
+/* ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    color: var(--primary-text-color);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Container Principal do Dashboard (Replicado do styles.css para garantir o layout) */
+.dashboard-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--background-light) 0%, #ecfeff 100%);
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .dashboard-container {
+        padding: 2rem;
+    }
+}
+
+.content-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+/* ========================================= */
+/* --- NOVO CABEÇALHO GLOBAL (main-header) ---*/
+/* ========================================= */
+.main-header {
+    background-color: var(--card-background);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo dentro */
+    align-items: center;
+    margin-bottom: 25px; 
+    width: 100%;
+}
+
+/* 1. Alinhamento e Centralização */
+.header-content {
+    max-width: 1280px; /* Limita o conteúdo */
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* Alinha logo na esquerda e navegação/ações na direita */
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Navegação Principal */
+.main-nav ul { 
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+.main-nav {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--secondary-text-color); /* Cor padrão CINZA para o TEXTO */
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link i {
+    color: var(--secondary-text-color); /* Cor padrão CINZA para o ÍCONE (Seta) */
+    font-size: 1.1em;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color); /* Cor ROXA no hover (TEXTO) */
+}
+
+.nav-link:hover i {
+    color: var(--primary-color); /* Cor ROXA no hover (ÍCONE) */
+}
+
+/* Botões de Ações no Header (usados no index.html) */
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Remover o CSS antigo do cabeçalho de dashboard/postos (se usado) */
+.header {
+    display: none; 
+}
+.header-principal {
+    display: none; 
+}
+/* Variáveis de Cores */
+:root {
+    --primary-color: #115e59;        /* Roxo principal (ex: botões, hover) */
+    --secondary-color: #0d9488;      /* Roxo mais claro */
+    --accent-color: #e91e63;         /* Rosa/Magenta (opcional para destaque) */
+    --background-color: #f4f7f6;     /* Fundo da página */
+    --card-background: #ffffff;      /* Fundo de cards e header */
+    --primary-text-color: #333333;   /* Texto principal (preto) */
+    --secondary-text-color: #666666; /* Texto secundário (cinza) */
+    --success-color: #28a745;        /* Verde (Disponível) */
+    --warning-color: #ffc107;        /* Amarelo/Laranja (Reposição) */
+    --danger-color: #dc3545;         /* Vermelho (Sair/Indisponível) */
+}
+
+/* Base e Tipografia */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+    line-height: 1.6;
+}
+
+h2, h3, h4 {
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+    font-weight: 600;
+}

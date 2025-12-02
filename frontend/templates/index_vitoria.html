@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira de Vacinas - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="content-wrapper">
+            <!-- Cabeçalho -->
+            <header class="header">
+                <div class="header-content">
+                    <div>
+                        <h1>Minha Carteira de Vacinas</h1>
+                        <p class="subtitle">Bem-vindo de volta! Aqui está seu resumo de vacinação.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="navigateToProfile()">
+                            <i class="fas fa-file-alt"></i>
+                            Meu perfil
+                        </button>
+                        <button class="btn btn-outline"onclick="navigateToAgendar()">
+                            <i class="fas fa-calendar"></i>
+                            Agendar Vacina
+                        </button>
+                        <button class="btn btn-profile" onclick="navigateToSair()">
+                            <i class="fas fa-right-from-bracket"></i> 
+                            Sair
+                        </button>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Acesso Rápido -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Acesso Rápido</h3>
+                    <p class="card-description">Navegue rapidamente pelas principais funcionalidades</p>
+                </div>
+                <div class="card-content">
+                    <div class="quick-access-grid">
+                        <button class="quick-access-btn" onclick="navigateToCard()">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Carteirinha Digital</span>
+                        </button>
+                        <button class="quick-access-btn" onclick="navigateTofamilia()">
+                            <i class="fas fa-calendar"></i>
+                            <span>Agendar Familiares</span>
+                        </button>
+                        <button class="quick-access-btn" onclick="navigateToCard(true)">
+                            <i class="fas fa-syringe"></i>
+                            <span>Histórico Completo</span>
+                        </button>
+                        <button class="quick-access-btn" onclick="MapsToAgendamento()">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Meus Agendamentos</span>
+                        </button>
+                        <button class="quick-access-btn" onclick="navigateToPostos()">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Consultar Postos</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards de Estatísticas -->
+            <div class="stats-grid">
+                <div class="stat-card stat-card-teal">
+                    <div class="stat-header">
+                        <span class="stat-label">Total de Vacinas</span>
+                        <i class="fas fa-syringe stat-icon"></i>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <p class="stat-subtitle">Registradas no sistema</p>
+                </div>
+
+                <div class="stat-card stat-card-green">
+                    <div class="stat-header">
+                        <span class="stat-label">Em Dia</span>
+                        <i class="fas fa-check-circle stat-icon"></i>
+                    </div>
+                    <div class="stat-value">8</div>
+                    <p class="stat-subtitle">Vacinas completas</p>
+                </div>
+            </div>
+
+            <!-- Progresso Geral -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Progresso Geral</h3>
+                    <p class="card-description">Você completou 8 de 12 vacinas recomendadas</p>
+                </div>
+                <div class="card-content">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 67%;"></div>
+                        </div>
+                        <p class="progress-text">67% completo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Doses Agendadas -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar-check card-title-icon"></i>
+                        Doses Agendadas
+                    </h3>
+                    <p class="card-description">Suas próximas vacinas e reforços programados</p>
+                </div>
+                <div class="card-content">
+                    <div class="scheduled-doses">
+                        <div class="dose-item">
+                            <div class="dose-info">
+                                <h4 class="dose-name">COVID-19 (Reforço)</h4>
+                                <div class="dose-details">
+                                    <span class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        15/11/2025
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        14:00
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        UBS Central
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="dose-actions">
+                                <span class="badge badge-teal">Em 7 dias</span>
+                                <button class="btn btn-outline-sm">Detalhes</button>
+                            </div>
+                        </div>
+
+                        <div class="dose-item">
+                            <div class="dose-info">
+                                <h4 class="dose-name">Tétano (Reforço)</h4>
+                                <div class="dose-details">
+                                    <span class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        01/12/2025
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        09:30
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        Posto de Saúde Vila Nova
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="dose-actions">
+                                <span class="badge badge-teal">Em 23 dias</span>
+                                <button class="btn btn-outline-sm">Detalhes</button>
+                            </div>
+                        </div>
+
+                        <div class="dose-item">
+                            <div class="dose-info">
+                                <h4 class="dose-name">Hepatite A (2ª dose)</h4>
+                                <div class="dose-details">
+                                    <span class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        10/01/2026
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        -
+                                    </span>
+                                    <span class="detail-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        A agendar
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="dose-actions">
+                                <span class="badge badge-teal">Em 63 dias</span>
+                                <button class="btn btn-outline-sm">Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função atualizada para aceitar um parâmetro
+        function navigateToCard(showHistory = false) {
+            let url = 'carteirinha.html';
+            if (showHistory) {
+                // Adiciona um parâmetro à URL
+                url += '?showHistory=true';
+            }
+            window.location.href = url;
+        }
+
+        function navigateToPostos() {
+            window.location.href = '../mika/index.html';
+        }
+        function navigateToProfile() {
+            window.location.href = '../perfil/perfil.html'; 
+        }
+        function navigateToAgendar() {
+            window.location.href = '../mika/index.html'; 
+        }
+        function MapsToAgendamento() {
+            navigateTo('agendamento'); 
+        }
+
+        function navigateTofamilia() {
+            window.location.href = 'familia/familia.html'; 
+        }
+        function navigateToSair() {
+            window.location.href = '../inicio/login.html';
+        }
+    
+    </script>
+</body>
+</html>
