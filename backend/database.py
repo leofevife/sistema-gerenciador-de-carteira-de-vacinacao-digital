@@ -1,7 +1,7 @@
 import sqlite3
 from werkzeug.security import generate_password_hash
 
-DATABASE = '/home/ubuntu/project_vacina/backend/database.db'
+DATABASE = 'database.db'
 
 def get_db():
     conn = sqlite3.connect(DATABASE)
