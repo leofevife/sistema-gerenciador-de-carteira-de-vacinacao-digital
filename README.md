@@ -26,7 +26,7 @@ project_vacina/
     *   Cadastro de novos usuários (CPF, nome, senha, etc.).
     *   Login com CPF e senha.
     *   Gerenciamento de sessão.
-2.  **Frontend Refatorado:**
+2.  **Frontend:**
     *   Estrutura de pastas e nomes de arquivos padronizados e em português/inglês.
     *   Uso de `url_for` do Flask para referenciar corretamente os arquivos estáticos e rotas.
 3.  **Gerenciamento de Dados:**
@@ -51,7 +51,7 @@ Navegue até a pasta raiz do projeto e instale as dependências:
 cd /caminho/para/Carteira_de_vacinacao_digital
 
 # Instale as bibliotecas necessárias
-pip install Flask Werkzeug qrcode Pillow fpdf2
+pip pip install Flask Werkzeug qrcode Pillow fpdf2
 ```
 
 > **Nota sobre Fpdf2:** Esta biblioteca não requer dependências externas do sistema operacional, o que facilita a execução em ambientes como o Windows. No entanto, a geração do PDF é feita de forma programática e não é uma cópia exata do HTML da página.
