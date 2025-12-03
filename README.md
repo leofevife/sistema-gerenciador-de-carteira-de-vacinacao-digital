@@ -26,7 +26,7 @@ project_vacina/
     *   Cadastro de novos usuários (CPF, nome, senha, etc.).
     *   Login com CPF e senha.
     *   Gerenciamento de sessão.
-2.  **Frontend:**
+2.  **Frontend Refatorado:**
     *   Estrutura de pastas e nomes de arquivos padronizados e em português/inglês.
     *   Uso de `url_for` do Flask para referenciar corretamente os arquivos estáticos e rotas.
 3.  **Gerenciamento de Dados:**
@@ -42,7 +42,7 @@ Você precisa ter o **Python 3** instalado em seu sistema.
 
 ### 2. Instalação de Dependências
 
-O projeto agora requer as seguintes bibliotecas Python: `Flask`, `Werkzeug`, `qrcode`, `Pillow` e `WeasyPrint`.
+O projeto agora requer as seguintes bibliotecas Python: `Flask`, `Werkzeug`, `qrcode`, `Pillow` e `fpdf2`.
 
 Navegue até a pasta raiz do projeto e instale as dependências:
 
@@ -51,10 +51,10 @@ Navegue até a pasta raiz do projeto e instale as dependências:
 cd /caminho/para/Carteira_de_vacinacao_digital
 
 # Instale as bibliotecas necessárias
-pip install Flask Werkzeug qrcode Pillow WeasyPrint
+pip install Flask Werkzeug qrcode Pillow fpdf2
 ```
 
-> **Nota sobre WeasyPrint:** Em alguns sistemas operacionais (como Linux), o WeasyPrint pode exigir a instalação de dependências externas (como `pango`, `cairo` e `gdk-pixbuf`). Se a instalação falhar, consulte a documentação oficial do WeasyPrint para o seu sistema.
+> **Nota sobre Fpdf2:** Esta biblioteca não requer dependências externas do sistema operacional, o que facilita a execução em ambientes como o Windows. No entanto, a geração do PDF é feita de forma programática e não é uma cópia exata do HTML da página.
 
 ### 3. Inicialização do Banco de Dados
 
@@ -95,5 +95,5 @@ A aplicação estará acessível em `http://127.0.0.1:5000/` (ou `http://localho
 *   **Mensagens Flash:** Uso de `flash` para exibir mensagens de sucesso/erro ao usuário.
 *   **Dados do Usuário na Carteira:** Os dados cadastrais do usuário (Nome, CPF, CNS, Data de Nascimento) são exibidos dinamicamente na página da carteira de vacinação.
 *   **QR Code Funcional:** Implementação de uma rota Flask para gerar um QR Code dinâmico contendo o CPF do usuário, exibido na carteira.
-*   **Download de PDF Funcional:** Implementação de uma rota Flask que utiliza **WeasyPrint** para converter a página da carteira de vacinação em um arquivo PDF para download.
+*   **Download de PDF Funcional:** Implementação de uma rota Flask que utiliza **Fpdf2** para gerar um PDF programático com os dados do usuário e o histórico de vacinação. Esta solução não requer dependências externas do sistema operacional.
 *   **Exibição de Vacinas:** As vacinas registradas no banco de dados são exibidas em uma tabela na carteira, com a funcionalidade de **clique para exibir detalhes** (simulado via `alert()` no frontend).

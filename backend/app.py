@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash
 from database import init_db, find_user_by_cpf, add_user, find_user_by_id, get_user_vaccines
 import qrcode
 from io import BytesIO
-from weasyprint import HTML, CSS
+from fpdf import FPDF
 from flask import send_file
 
 # Configuração do Flask
@@ -214,12 +214,74 @@ def download_vaccine_card():
             v['date_formatted'] = datetime.strptime(v['date_taken'], '%Y-%m-%d').strftime('%d/%m/%Y')
             v['status'] = 'Aplicada' # Status fixo por enquanto
     
-    # Renderiza o HTML da carteira de vacinação
-    html_content = render_template('vaccine_card.html', user=user_data, vaccines=vaccines, is_pdf=True)
+    # --- Lógica de Geração de PDF com Fpdf2 ---
     
-    # Converte o HTML para PDF usando WeasyPrint
+    class PDF(FPDF):
+        def header(self):
+            self.set_font('Arial', 'B', 15)
+            self.cell(0, 10, 'ImmunoTrack - Carteira de Vacinação Digital', 0, 1, 'C')
+            self.ln(5)
+
+        def footer(self):
+            self.set_y(-15)
+            self.set_font('Arial', 'I', 8)
+            self.cell(0, 10, f'Página {self.page_no()}/{{nb}}', 0, 0, 'C')
+
+        def chapter_title(self, title):
+            self.set_font('Arial', 'B', 12)
+            self.cell(0, 6, title, 0, 1, 'L')
+            self.ln(2)
+
+        def chapter_body(self, body):
+            self.set_font('Arial', '', 10)
+            self.multi_cell(0, 5, body)
+            self.ln()
+
+        def add_user_details(self, user):
+            self.chapter_title('Dados Pessoais')
+            self.set_font('Arial', '', 10)
+            self.cell(0, 5, f"Nome: {user['name']}", 0, 1)
+            self.cell(0, 5, f"CPF: {user['cpf_formatted']}", 0, 1)
+            self.cell(0, 5, f"CNS: {user['cns']}", 0, 1)
+            self.cell(0, 5, f"Nascimento: {user['dob_formatted']}", 0, 1)
+            self.cell(0, 5, f"Gênero: {user['gender']}", 0, 1)
+            self.ln(5)
+
+        def add_vaccine_table(self, vaccines):
+            self.chapter_title('Histórico de Vacinação')
+            
+            if not vaccines:
+                self.chapter_body("Nenhuma vacina registrada.")
+                return
+
+            # Cabeçalho da tabela
+            self.set_font('Arial', 'B', 10)
+            col_widths = [50, 20, 30, 40, 50]
+            headers = ['Vacina', 'Dose', 'Data', 'Lote', 'Local']
+            
+            for i, header in enumerate(headers):
+                self.cell(col_widths[i], 7, header, 1, 0, 'C')
+            self.ln()
+
+            # Linhas da tabela
+            self.set_font('Arial', '', 10)
+            for v in vaccines:
+                self.cell(col_widths[0], 6, v['vaccine_name'], 1, 0)
+                self.cell(col_widths[1], 6, f"{v['dose_number']}ª", 1, 0, 'C')
+                self.cell(col_widths[2], 6, v['date_formatted'], 1, 0, 'C')
+                self.cell(col_widths[3], 6, v.get('lote', 'N/A'), 1, 0)
+                self.cell(col_widths[4], 6, v.get('local', 'N/A'), 1, 1)
+            self.ln(5)
+
+    pdf = PDF()
+    pdf.alias_nb_pages()
+    pdf.add_page()
+    
+    pdf.add_user_details(user_data)
+    pdf.add_vaccine_table(vaccines)
+    
     pdf_buffer = BytesIO()
-    HTML(string=html_content).write_pdf(pdf_buffer)
+    pdf.output(pdf_buffer)
     pdf_buffer.seek(0)
     
     return send_file(pdf_buffer, 
