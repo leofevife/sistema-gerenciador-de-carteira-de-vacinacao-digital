@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="vaccine-card-actions">
-                            <button class="btn btn-card" onclick="toggleQR()">
+                            <button class="btn btn-card" onclick="toggleQR()" data-user-cpf="{{ user.cpf }}">
                                 <i class="fas fa-qrcode"></i>
                                 <span class="btn-text">QR Code</span>
                             </button>
@@ -49,15 +49,7 @@
                                 <i class="fas fa-eye-slash" id="historyIcon"></i>
                                 <span class="btn-text" id="historyButtonText">Histórico</span>
                             </button>
-                            <button class="btn btn-card" onclick="shareCard()">
-                                <i class="fas fa-share-alt"></i>
-                                <span class="btn-text">Compartilhar</span>
-                            </button>
-                            <button class="btn btn-card" onclick="downloadPDF()">
-                                <i class="fas fa-download"></i>
-                                <span class="btn-text">Baixar PDF</span>
-                            </button>
-                        </div>
+                           <a h<button class="btn btn-card" onclick="shareCard()">\n                                <i class="fas fa-share-alt"></i>\n                                <span class="btn-text">Compartilhar</span>\n                            </button>\n                            <a href="{{ url_for('download_vaccine_card') }}" class="btn btn-card">\n                                <i class="fas fa-download"></i>\n                                <span class="btn-text">Baixar PDF</span>\n                            </a>               </div>
                     </div>
                 </div>
                 <div class="vaccine-card-content">
@@ -65,34 +57,34 @@
                         <div class="user-details">
                             <div class="detail-group">
                                 <span class="detail-label">Nome Completo</span>
-                                <p class="detail-value">Maria Silva Santos</p>
+                                <p class="detail-value">{{ user.name }}</p>
                             </div>
                             <div class="detail-row">
                                 <div class="detail-group">
                                     <span class="detail-label">CPF</span>
-                                    <p class="detail-value">123.456.789-00</p>
+                                    <p class="detail-value">{{ user.cpf_formatted }}</p>
                                 </div>
                                 <div class="detail-group">
                                     <span class="detail-label">Data de Nascimento</span>
-                                    <p class="detail-value">15/03/1990</p>
+                                    <p class="detail-value">{{ user.dob_formatted }}</p>
                                 </div>
                             </div>
                             <div class="detail-row">
                                 <div class="detail-group">
                                     <span class="detail-label">Cartão Nacional de Saúde</span>
-                                    <p class="detail-value">123 4567 8901 2345</p>
+                                    <p class="detail-value">{{ user.cns }}</p>
                                 </div>
                                 <div class="detail-group">
                                     <span class="detail-label">Tipo Sanguíneo</span>
-                                    <p class="detail-value">A+</p>
+                                    <p class="detail-value">{{ user.gender }}</p>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="qr-container" id="qrContainer" style="display: none;">
                             <div class="qr-code">
-                                <i class="fas fa-qrcode qr-icon"></i>
-                                <p class="qr-text">QR Code da Carteirinha</p>
+                                <img id="qrImage" src="" alt="QR Code da Carteirinha" style="width: 100%; height: auto; max-width: 200px;">
+                                <p class="qr-text">Escaneie para verificar</p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +92,7 @@
                     <div class="separator"></div>
 
                     <div class="vaccine-card-footer">
-                        <span class="badge badge-success">12 Vacinas Registradas</span>
+                        <span class="badge badge-success">{{ vaccines | length }} Vacinas Registradas</span>
                         <p class="update-date">Atualizado em: <span id="currentDate"></span></p>
                     </div>
                 </div>
@@ -132,6 +124,9 @@
                             </thead>
                             <tbody id="vaccineTableBody">
                                 </tbody>
+                                <script id="vaccine-data" type="application/json">
+                                    {{ vaccines | tojson }}
+                                </script>
                         </table>
                     </div>
                     <div class="table-footer" id="tableFooter">

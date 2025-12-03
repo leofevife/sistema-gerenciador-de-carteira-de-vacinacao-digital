@@ -42,15 +42,19 @@ Você precisa ter o **Python 3** instalado em seu sistema.
 
 ### 2. Instalação de Dependências
 
-Navegue até a pasta `backend` e instale as bibliotecas necessárias:
+O projeto agora requer as seguintes bibliotecas Python: `Flask`, `Werkzeug`, `qrcode`, `Pillow` e `WeasyPrint`.
+
+Navegue até a pasta raiz do projeto e instale as dependências:
 
 ```bash
 # Navegue até a pasta do projeto
-cd /home/ubuntu/project_vacina/backend
+cd /caminho/para/Carteira_de_vacinacao_digital
 
-# Instale o Flask e o Werkzeug (para hashing de senha)
-pip install Flask Werkzeug
+# Instale as bibliotecas necessárias
+pip install Flask Werkzeug qrcode Pillow WeasyPrint
 ```
+
+> **Nota sobre WeasyPrint:** Em alguns sistemas operacionais (como Linux), o WeasyPrint pode exigir a instalação de dependências externas (como `pango`, `cairo` e `gdk-pixbuf`). Se a instalação falhar, consulte a documentação oficial do WeasyPrint para o seu sistema.
 
 ### 3. Inicialização do Banco de Dados
 
@@ -89,3 +93,7 @@ A aplicação estará acessível em `http://127.0.0.1:5000/` (ou `http://localho
 *   **Integração:** Uso da sintaxe Jinja (`{{ url_for(...) }}`) nos arquivos HTML para garantir a correta resolução de URLs pelo Flask.
 *   **Sessão:** Implementação de sessões para manter o estado de login do usuário.
 *   **Mensagens Flash:** Uso de `flash` para exibir mensagens de sucesso/erro ao usuário.
+*   **Dados do Usuário na Carteira:** Os dados cadastrais do usuário (Nome, CPF, CNS, Data de Nascimento) são exibidos dinamicamente na página da carteira de vacinação.
+*   **QR Code Funcional:** Implementação de uma rota Flask para gerar um QR Code dinâmico contendo o CPF do usuário, exibido na carteira.
+*   **Download de PDF Funcional:** Implementação de uma rota Flask que utiliza **WeasyPrint** para converter a página da carteira de vacinação em um arquivo PDF para download.
+*   **Exibição de Vacinas:** As vacinas registradas no banco de dados são exibidas em uma tabela na carteira, com a funcionalidade de **clique para exibir detalhes** (simulado via `alert()` no frontend).

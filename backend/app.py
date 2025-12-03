@@ -1,7 +1,11 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import check_password_hash
-from database import init_db, find_user_by_cpf, add_user
+from database import init_db, find_user_by_cpf, add_user, find_user_by_id, get_user_vaccines
+import qrcode
+from io import BytesIO
+from weasyprint import HTML, CSS
+from flask import send_file
 
 # Configuração do Flask
 app = Flask(__name__, 
@@ -114,15 +118,114 @@ def login_required(f):
 @app.route('/profile')
 @login_required
 def profile():
-    # Rota para a página de perfil
-    # Aqui você buscará os dados do usuário logado no banco de dados
-    return render_template('profile.html', user_name=session.get('user_name'))
+    user_id = session.get('user_id')
+    user = find_user_by_id(user_id)
+    
+    if user:
+        user_data = dict(user)
+        # Formatar CPF para exibição (ex: 123.456.789-00)
+        user_data['cpf_formatted'] = f"{user_data['cpf'][:3]}.{user_data['cpf'][3:6]}.{user_data['cpf'][6:9]}-{user_data['cpf'][9:]}"
+        
+        # Formatar data de nascimento (dob)
+        if user_data['dob']:
+            from datetime import datetime
+            user_data['dob_formatted'] = datetime.strptime(user_data['dob'], '%Y-%m-%d').strftime('%d/%m/%Y')
+        
+        return render_template('profile.html', user=user_data)
+    
+    flash('Usuário não encontrado.', 'danger')
+    return redirect(url_for('login'))
 
 @app.route('/vaccine_card')
 @login_required
 def vaccine_card():
-    # Rota para a carteira de vacinação
-    return render_template('vaccine_card.html')
+    user_id = session.get('user_id')
+    user = find_user_by_id(user_id)
+    
+    if user:
+        user_data = dict(user)
+        user_data['cpf_formatted'] = f"{user_data['cpf'][:3]}.{user_data['cpf'][3:6]}.{user_data['cpf'][6:9]}-{user_data['cpf'][9:]}"
+        if user_data['dob']:
+            from datetime import datetime
+            user_data['dob_formatted'] = datetime.strptime(user_data['dob'], '%Y-%m-%d').strftime('%d/%m/%Y')
+            
+        vaccines = get_user_vaccines(user_id)
+        
+        # Formatar datas das vacinas
+        from datetime import datetime
+        for v in vaccines:
+            v['date_formatted'] = datetime.strptime(v['date_taken'], '%Y-%m-%d').strftime('%d/%m/%Y')
+            v['status'] = 'Aplicada' # Status fixo por enquanto
+        
+        return render_template('vaccine_card.html', user=user_data, vaccines=vaccines)
+        
+    flash('Usuário não encontrado.', 'danger')
+    return redirect(url_for('login'))
+
+@app.route('/generate_qr_code/<cpf>')
+@login_required
+def generate_qr_code(cpf):
+    # O conteúdo do QR Code será o CPF do usuário (ou um link seguro para a carteira)
+    qr_data = f"ImmunoTrack - CPF: {cpf}"
+    
+    # Cria o objeto QR Code
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(qr_data)
+    qr.make(fit=True)
+    
+    # Cria a imagem do QR Code
+    img = qr.make_image(fill_color="black", back_color="white")
+    
+    # Salva a imagem em um buffer de bytes
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    
+    return send_file(buffer, mimetype='image/png', as_attachment=False)
+
+@app.route('/download_vaccine_card')
+@login_required
+def download_vaccine_card():
+    user_id = session.get('user_id')
+    user = find_user_by_id(user_id)
+    
+    if not user:
+        flash('Usuário não encontrado.', 'danger')
+        return redirect(url_for('login'))
+        
+    # Renderiza a página da carteira de vacinação para o PDF
+    # Reutiliza a lógica de busca de dados do usuário e vacinas
+    user_data = dict(user)
+    user_data['cpf_formatted'] = f"{user_data['cpf'][:3]}.{user_data['cpf'][3:6]}.{user_data['cpf'][6:9]}-{user_data['cpf'][9:]}"
+    if user_data['dob']:
+        from datetime import datetime
+        user_data['dob_formatted'] = datetime.strptime(user_data['dob'], '%Y-%m-%d').strftime('%d/%m/%Y')
+        
+        vaccines = get_user_vaccines(user_id)
+        
+        # Formatar datas das vacinas
+        from datetime import datetime
+        for v in vaccines:
+            v['date_formatted'] = datetime.strptime(v['date_taken'], '%Y-%m-%d').strftime('%d/%m/%Y')
+            v['status'] = 'Aplicada' # Status fixo por enquanto
+    
+    # Renderiza o HTML da carteira de vacinação
+    html_content = render_template('vaccine_card.html', user=user_data, vaccines=vaccines, is_pdf=True)
+    
+    # Converte o HTML para PDF usando WeasyPrint
+    pdf_buffer = BytesIO()
+    HTML(string=html_content).write_pdf(pdf_buffer)
+    pdf_buffer.seek(0)
+    
+    return send_file(pdf_buffer, 
+                     mimetype='application/pdf', 
+                     as_attachment=True, 
+                     download_name=f"carteira_vacinacao_{user['cpf']}.pdf")
 
 @app.route('/family')
 @login_required
