@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Vacinação - ImmunoTrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carteirinha.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <span class="logo-text">ImmunoTrack</span>
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('profile') }}" class="nav-link"><i class="fas fa-user"></i> Perfil</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('vaccine_card') }}" class="nav-link"><i class="fas fa-arrow-left"></i> Voltar para Carteira</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="dashboard-container">
+        <div class="content-wrapper">
+
+            <div class="card">
+                <div class="card-header card-header-flex">
+                    <div>
+                        <h1 class="card-title"><i class="fas fa-history card-title-icon"></i> Histórico Detalhado de Vacinação</h1>
+                        <p class="card-description">Todas as vacinas registradas para {{ user.name }} (CPF: {{ user.cpf_formatted }})</p>
+                    </div>
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar vacina..." oninput="filterVaccines()">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="table-container">
+                        <table class="vaccine-table">
+                            <thead>
+                                <tr>
+                                    <th>Vacina</th>
+                                    <th>Dose</th>
+                                    <th>Data de Aplicação</th>
+                                    <th>Lote</th>
+                                    <th>Local de Aplicação</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vaccineTableBody">
+                                {% for vaccine in vaccines %}
+                                <tr onclick="showVaccineDetails({{ vaccine.id }})" style="cursor: pointer;">
+                                    <td class="vaccine-name">{{ vaccine.vaccine_name }}</td>
+                                    <td>{{ vaccine.dose_number }}ª Dose</td>
+                                    <td>{{ vaccine.date_formatted }}</td>
+                                    <td><code class="batch-code">{{ vaccine.lote or 'N/A' }}</code></td>
+                                    <td>{{ vaccine.local or 'N/A' }}</td>
+                                    <td class="text-center">
+                                        <span class="badge badge-applied">{{ vaccine.status }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer" id="tableFooter">
+                        Mostrando {{ vaccines | length }} vacina(s)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script id="vaccine-data" type="application/json">
+        {{ vaccines | tojson }}
+    </script>
+    <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+    
+</body>
+</html>

@@ -26,7 +26,7 @@ project_vacina/
     *   Cadastro de novos usuários (CPF, nome, senha, etc.).
     *   Login com CPF e senha.
     *   Gerenciamento de sessão.
-2.  **Frontend:**
+2.  **Frontend Refatorado:**
     *   Estrutura de pastas e nomes de arquivos padronizados e em português/inglês.
     *   Uso de `url_for` do Flask para referenciar corretamente os arquivos estáticos e rotas.
 3.  **Gerenciamento de Dados:**
@@ -42,7 +42,7 @@ Você precisa ter o **Python 3** instalado em seu sistema.
 
 ### 2. Instalação de Dependências
 
-O projeto agora requer as seguintes bibliotecas Python: `Flask`, `Werkzeug`, `qrcode`, `Pillow` e `fpdf2`.
+O projeto agora requer as seguintes bibliotecas Python: `Flask`, `Werkzeug` e `fpdf2`. (As bibliotecas `qrcode` e `Pillow` foram removidas, pois a funcionalidade de QR Code foi retirada).
 
 Navegue até a pasta raiz do projeto e instale as dependências:
 
@@ -51,7 +51,7 @@ Navegue até a pasta raiz do projeto e instale as dependências:
 cd /caminho/para/Carteira_de_vacinacao_digital
 
 # Instale as bibliotecas necessárias
-pip pip install Flask Werkzeug qrcode Pillow fpdf2
+pip install Flask Werkzeug fpdf2
 ```
 
 > **Nota sobre Fpdf2:** Esta biblioteca não requer dependências externas do sistema operacional, o que facilita a execução em ambientes como o Windows. No entanto, a geração do PDF é feita de forma programática e não é uma cópia exata do HTML da página.
@@ -94,6 +94,7 @@ A aplicação estará acessível em `http://127.0.0.1:5000/` (ou `http://localho
 *   **Sessão:** Implementação de sessões para manter o estado de login do usuário.
 *   **Mensagens Flash:** Uso de `flash` para exibir mensagens de sucesso/erro ao usuário.
 *   **Dados do Usuário na Carteira:** Os dados cadastrais do usuário (Nome, CPF, CNS, Data de Nascimento) são exibidos dinamicamente na página da carteira de vacinação.
-*   **QR Code Funcional:** Implementação de uma rota Flask para gerar um QR Code dinâmico contendo o CPF do usuário, exibido na carteira.
+
 *   **Download de PDF Funcional:** Implementação de uma rota Flask que utiliza **Fpdf2** para gerar um PDF programático com os dados do usuário e o histórico de vacinação. Esta solução não requer dependências externas do sistema operacional.
-*   **Exibição de Vacinas:** As vacinas registradas no banco de dados são exibidas em uma tabela na carteira, com a funcionalidade de **clique para exibir detalhes** (simulado via `alert()` no frontend).
+*   **Exibição de Vacinas (Formato Inovador):** As vacinas são exibidas na carteira principal como **"quadrados clicáveis"** que alternam entre o **Nome da Vacina** e a **Data de Aplicação** ao serem clicados.
+*   **Histórico Detalhado:** O botão "Histórico" na carteira foi substituído por um link para uma nova página (`/vaccine_history`) que exibe a lista completa de vacinas em formato de tabela, com funcionalidade de busca e clique para detalhes.

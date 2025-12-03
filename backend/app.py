@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import check_password_hash
 from database import init_db, find_user_by_cpf, add_user, find_user_by_id, get_user_vaccines
-import qrcode
 from io import BytesIO
 from fpdf import FPDF
 from flask import send_file
@@ -136,6 +135,32 @@ def profile():
     flash('Usuário não encontrado.', 'danger')
     return redirect(url_for('login'))
 
+@app.route('/vaccine_history')
+@login_required
+def vaccine_history():
+    user_id = session.get('user_id')
+    user = find_user_by_id(user_id)
+    
+    if user:
+        user_data = dict(user)
+        user_data['cpf_formatted'] = f"{user_data['cpf'][:3]}.{user_data['cpf'][3:6]}.{user_data['cpf'][6:9]}-{user_data['cpf'][9:]}"
+        if user_data['dob']:
+            from datetime import datetime
+            user_data['dob_formatted'] = datetime.strptime(user_data['dob'], '%Y-%m-%d').strftime('%d/%m/%Y')
+            
+        vaccines = get_user_vaccines(user_id)
+        
+        # Formatar datas das vacinas
+        from datetime import datetime
+        for v in vaccines:
+            v['date_formatted'] = datetime.strptime(v['date_taken'], '%Y-%m-%d').strftime('%d/%m/%Y')
+            v['status'] = 'Aplicada' # Status fixo por enquanto
+        
+        return render_template('vaccine_history.html', user=user_data, vaccines=vaccines)
+        
+    flash('Usuário não encontrado.', 'danger')
+    return redirect(url_for('login'))
+
 @app.route('/vaccine_card')
 @login_required
 def vaccine_card():
@@ -156,37 +181,17 @@ def vaccine_card():
         for v in vaccines:
             v['date_formatted'] = datetime.strptime(v['date_taken'], '%Y-%m-%d').strftime('%d/%m/%Y')
             v['status'] = 'Aplicada' # Status fixo por enquanto
+            
+        # Determinar a data da última atualização (data da última vacina aplicada)
+        last_update = max([datetime.strptime(v['date_taken'], '%Y-%m-%d') for v in vaccines]) if vaccines else datetime.now()
+        last_update_formatted = last_update.strftime('%d/%m/%Y')
         
-        return render_template('vaccine_card.html', user=user_data, vaccines=vaccines)
+        return render_template('vaccine_card.html', user=user_data, vaccines=vaccines, last_update=last_update_formatted)
         
     flash('Usuário não encontrado.', 'danger')
     return redirect(url_for('login'))
 
-@app.route('/generate_qr_code/<cpf>')
-@login_required
-def generate_qr_code(cpf):
-    # O conteúdo do QR Code será o CPF do usuário (ou um link seguro para a carteira)
-    qr_data = f"ImmunoTrack - CPF: {cpf}"
-    
-    # Cria o objeto QR Code
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(qr_data)
-    qr.make(fit=True)
-    
-    # Cria a imagem do QR Code
-    img = qr.make_image(fill_color="black", back_color="white")
-    
-    # Salva a imagem em um buffer de bytes
-    buffer = BytesIO()
-    img.save(buffer, format="PNG")
-    buffer.seek(0)
-    
-    return send_file(buffer, mimetype='image/png', as_attachment=False)
+
 
 @app.route('/download_vaccine_card')
 @login_required

@@ -828,3 +828,44 @@ button:focus:not(:focus-visible),
 input:focus:not(:focus-visible) {
     outline: none;
 }
+
+/* --- Estilos para a nova funcionalidade de Quadrados Clicáveis --- */
+.vaccine-squares-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 0;
+    justify-content: center;
+}
+
+.vaccine-square {
+    background-color: #0d9488; /* Cor primária do projeto */
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    min-width: 120px;
+    max-width: 150px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.vaccine-square:hover {
+    background-color: #0f766e; /* Cor mais escura no hover */
+}
+
+.vaccine-info {
+    display: block;
+    font-size: 0.9em;
+    line-height: 1.2;
+}
+
+.vaccine-info.date {
+    font-size: 1.1em;
+}
