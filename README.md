@@ -26,7 +26,7 @@ project_vacina/
     *   Cadastro de novos usuários (CPF, nome, senha, etc.).
     *   Login com CPF e senha.
     *   Gerenciamento de sessão.
-2.  **Frontend Refatorado:**
+2.  **Frontend:**
     *   Estrutura de pastas e nomes de arquivos padronizados e em português/inglês.
     *   Uso de `url_for` do Flask para referenciar corretamente os arquivos estáticos e rotas.
 3.  **Gerenciamento de Dados:**
